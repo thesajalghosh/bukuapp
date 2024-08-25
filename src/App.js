@@ -1,22 +1,22 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import './App.css';
 
 function App() {
+  const { speak, voices } = useSpeechSynthesis();
+
+  useEffect(() => {
+    // Find the appropriate voice (optional)
+    const voice = voices.find(v => v.lang === 'en-US');
+    
+    // Speak the text when the app is first loaded
+    speak({ text: "Debanjali, I love you", voice });
+  }, [speak, voices]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Debanjali, I love you</h1>
       </header>
     </div>
   );
