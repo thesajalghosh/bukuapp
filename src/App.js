@@ -1,22 +1,29 @@
-import React, { useEffect } from 'react';
-import { useSpeechSynthesis } from 'react-speech-kit';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const { speak, voices } = useSpeechSynthesis();
+  const [times, setTimes] = useState(0)
+  const speakText = () => {
+    setTimes(times +1)
+    if ('speechSynthesis' in window) {
+      const message = new SpeechSynthesisUtterance("Debanjali, I love you");
+      message.lang = 'en-US';
+      window.speechSynthesis.speak(message);
+    } else {
+      alert("Speech Synthesis is not supported in your browser.");
+    }
+  };
 
-  useEffect(() => {
-    // Find the appropriate voice (optional)
-    const voice = voices.find(v => v.lang === 'en-US');
-    
-    // Speak the text when the app is first loaded
-    speak({ text: "Debanjali, I love you", voice });
-  }, [speak, voices]);
+  useEffect(()=>{
+    speakText()
+  }, [times])
+
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>Debanjali, I love you</h1>
+        {/* <button onClick={speakText}>Click to Speak</button> */}
       </header>
     </div>
   );
